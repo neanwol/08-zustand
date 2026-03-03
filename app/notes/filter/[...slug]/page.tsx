@@ -46,10 +46,11 @@ export default async function Notelist({
   );
 }
 
-export async function generateMetadata({ params }: { params: { slug?: string[] } }): Promise<Metadata> {
-  const slug = params.slug?.[0] ?? 'all';
-  const title = `Notes — ${slug === 'all' ? 'All' : slug}`;
-  const description = `Viewing notes filtered by: ${slug}`;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const s = slug?.[0] ?? 'all';
+  const title = `Notes — ${s === 'all' ? 'All' : s}`;
+  const description = `Viewing notes filtered by: ${s}`;
 
   return {
     title,
@@ -57,7 +58,7 @@ export async function generateMetadata({ params }: { params: { slug?: string[] }
     openGraph: {
       title,
       description,
-      url: `https://notehub.example.com/notes/filter/${slug}`,
+      url: `https://notehub.example.com/notes/filter/${s}`,
       images: [
         {
           url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
