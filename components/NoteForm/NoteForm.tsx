@@ -18,7 +18,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const setDraft = useNoteStore((s) => s.setDraft);
   const clearDraft = useNoteStore((s) => s.clearDraft);
 
-  const { mutateAsync, isLoading } = useMutation({
+  const mutation = useMutation({
     mutationFn: createNote,
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
@@ -33,7 +33,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await mutateAsync(draft);
+      await mutation.mutateAsync(draft);
       clearDraft();
       router.back();
       if (onClose) onClose();
@@ -91,7 +91,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         <button type="button" className={css.cancelButton} onClick={handleCancel}>
           Cancel
         </button>
-        <button type="submit" className={css.submitButton} disabled={isLoading}>
+        <button type="submit" className={css.submitButton} disabled={false}>
           Create note
         </button>
       </div>
