@@ -1,0 +1,11 @@
+.title {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.description {
+  text-align: center;
+  margin-top: 16px;
+  color: #555;
+}
