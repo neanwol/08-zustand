@@ -1,4 +1,5 @@
 import { fetchNotes } from "@/lib/api";
+import type { Metadata } from 'next';
 import {
   QueryClient,
   dehydrate,
@@ -45,7 +46,7 @@ export default async function Notelist({
   );
 }
 
-export async function generateMetadata({ params }: { params: { slug?: string[] } }) {
+export async function generateMetadata({ params }: { params: { slug?: string[] } }): Promise<Metadata> {
   const slug = params.slug?.[0] ?? 'all';
   const title = `Notes — ${slug === 'all' ? 'All' : slug}`;
   const description = `Viewing notes filtered by: ${slug}`;

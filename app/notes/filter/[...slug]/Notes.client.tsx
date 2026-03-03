@@ -4,9 +4,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 import css from "./notes.module.css";
-import { useMutation } from "@tanstack/react-query";
-import { deleteNote } from "@/lib/api";
-import { useQueryClient } from "@tanstack/react-query";
+
 import Pagination from "@/components/Pagination/Pagination";
 import { useState } from "react";
 import SearchBox from "@/components/SearchBox/SearchBox";
@@ -44,17 +42,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
 
   const debouncedSetQuery = useDebouncedCallback(handleSearch, 500);
 
-  const queryClient = useQueryClient();
-
-  useMutation({
-        mutationFn: deleteNote,
-        onSuccess() {
-            queryClient.invalidateQueries({ queryKey: ["notes"] });
-        },
-        onError(error) {
-            console.log(error);
-        },
-    });
+  
 
   return (
     <div className={css.notesContainer}>
